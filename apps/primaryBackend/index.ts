@@ -1,10 +1,8 @@
-
 import {prismaClient} from "db/client";
 import express from "express";
 import { middleware } from "./middleware";
 import cors from "cors";
 import dotenv from "dotenv";
-
 
 dotenv.config({
     path: "./.env"
@@ -48,6 +46,9 @@ app.post("/project",middleware,async (req, res) => {
             }
         })
 
+
+
+
         console.log(response);
         res.status(200).json(response);
     } catch (error) {
@@ -62,6 +63,6 @@ app.post("/",middleware,(req, res) => {
 });
 
 
-app.listen(8080 , () => {
-    console.log("Server started on port 3000");
+app.listen(8082 , () => {
+    console.log("Server started on port 8082");
 });

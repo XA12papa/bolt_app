@@ -12,9 +12,10 @@
   "dependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
+    "axios": "^1.11.0",
     "cors": "^2.8.5",
+    "db": "workspace:db",
     "express": "^5.1.0",
-    "openai": "^5.12.2",
-    "db": "workspace:db"
+    "openai": "^5.12.2"
   }
 }

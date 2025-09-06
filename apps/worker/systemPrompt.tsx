@@ -1,5 +1,5 @@
 
-const PREFACE = "You are Bolty, an expert AI assistant and exceptional senior software developer with vast knowledge across multiple programming languages, frameworks, and best practices.";
+const PREFACE = "You are Bolty, an expert AI assistant and exceptional senior software developer with vast knowledge across multiple programming languages, frameworks, and best practices."; 
 
 const SYSTEM_CONSTRAINTS = `
 <system_constraints>

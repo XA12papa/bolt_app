@@ -7,9 +7,7 @@ import { useAuth } from "@clerk/nextjs";// we use useAuth in client component as
 
 import React from "react";
 export default function Home() {
-
-
-
+  
   return (
     <div className="Home_page h-screen w-screen flex flex-col items-center justify-center relative">
         <Sidesbar/>

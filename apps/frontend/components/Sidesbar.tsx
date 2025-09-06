@@ -49,7 +49,7 @@ function Sidesbar() {
     React.useEffect(() => {
         async function getProjects(){
             try {
-                const response = await axios.get("http://localhost:8080/projects");
+                const response = await axios.get("http://localhost:8082/projects");
                 setProjects(response.data);
             } catch (error) {
                 console.error(error);   
@@ -71,8 +71,8 @@ function Sidesbar() {
             
             <div className='projects'>
                 {
-                    projects.map((project : projects) => (
-                        <Button className='drawer-button w-full mt-2'>{project.description}</Button>
+                    projects.map((project : projects,index : number) => (
+                        <Button key={index} className='drawer-button w-full mt-2'>{project.description}</Button>
                     ))
                 }
             </div>

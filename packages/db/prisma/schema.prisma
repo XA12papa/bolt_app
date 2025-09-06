@@ -23,6 +23,11 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
+enum ProjectType {
+  REACT_NATIVE
+  NEXTJS
+  REACT
+}
 
 model Project{
   id String @id @default(uuid())
@@ -31,6 +36,7 @@ model Project{
   updatedAt DateTime @updatedAt
   prompt Prompt[]
   userId String
+  type   ProjectType @default(NEXTJS)
 }
 
 enum Role {
