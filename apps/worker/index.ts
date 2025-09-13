@@ -81,14 +81,13 @@ app.post('/prompt',async (req,res)=>{
     for await (const chunk of response) {
         if(chunk.type === "response.output_text.delta"){
             // chunk.delta contains all the response generation
-            console.log(chunk.delta)
+            // console.log(chunk.delta)
             artifactProcessor.append(chunk.delta);
             artifactProcessor.parse();
             artifact += chunk.delta;
         }
-
+        
     }
-    console.log("Full delta Response :  ", artifact)
 
     //  store response from the llm to database attachig the prompt 
 
@@ -99,6 +98,7 @@ app.post('/prompt',async (req,res)=>{
             role : "SYSTEM"
         }
     });
+    console.log("final response ", finalMessage)
     if(!finalMessage){
         return res.status(400).json({ message: "Failed to store the final message" });
     }
@@ -106,6 +106,6 @@ app.post('/prompt',async (req,res)=>{
     return res.status(200).json({ message: "Prompt stored successfully" });
 })
 
-app.listen(8080,()=>{
-    console.log("App is running on the port 8080 !! ", )
+app.listen(3002,()=>{
+    console.log("App is running on the port 300 !! ", )
 })
