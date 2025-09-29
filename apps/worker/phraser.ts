@@ -43,29 +43,27 @@ export class ArtifactProcessor {
         const actionLine = this.currentArtifact.split("\n")[latestActionStart];
         const typeMatch = actionLine?.match(/type="([^"]+)"/);
         let latestActionType = typeMatch ? typeMatch[1] : null;
-        console.log("action type",latestActionType);
+        // console.log("action type",latestActionType);
         // working : seperates the latest action code  over here  
         
         const latestActionContent = this.currentArtifact.split("\n").slice(latestActionStart,latestActionEnd +1).join("\n");
         
-        console.log("content  : ",latestActionContent);
-        console.log("file  : ",latestActionType);
+        // console.log("content  : ",latestActionContent);
+        // console.log("file  : ",latestActionType);
         
 
         try{
             if (latestActionType === "shell"){
-                console.log("Shell Command")
                 let shellCommand = latestActionContent.split('\n').slice(1).join('\n');
-                console.log("Shell Command")
                 if( shellCommand.includes("</boltAction>")){
                     shellCommand = shellCommand.split("</boltAction>")[0] || "";
-                    this.currentArtifact = this.currentArtifact.split(latestActionContent)[1] || "";
-                    console.log("#### current shell command ### !!->", shellCommand);
+                        this.currentArtifact = this.currentArtifact.split(latestActionContent)[1] || "";
+                    // console.log("#### current shell command ### !!->", shellCommand);
                     this.onShellCommand(shellCommand);
                 }
             }else if ( latestActionType === "file"){
                 
-                console.log(this.currentArtifact.split("\n")[latestActionStart]?.split("filePath=")[1]?.split(">")[0])
+                // console.log(this.currentArtifact.split("\n")[latestActionStart]?.split("filePath=")[1]?.split(">")[0])
 
                 const filePath = this.currentArtifact.split("\n")[latestActionStart]?.split("filePath=")[1]?.split(">")[0];
                 
@@ -76,7 +74,7 @@ export class ArtifactProcessor {
 
                     fileContent = fileContent.split("</boltAction>")[0]|| "";
                     this.currentArtifact = this.currentArtifact.split(latestActionContent)[1] || "";
-                    console.log("#### current file path  ### !!->", filePath);
+                    // console.log("#### current file path  ### !!->", filePath);
                     this.onFileContent(filePath?.split("\"")[1] || "",fileContent);
 
                 }

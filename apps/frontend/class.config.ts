@@ -1,0 +1,1 @@
+export const dark_button_class = ``

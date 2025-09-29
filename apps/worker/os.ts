@@ -1,8 +1,7 @@
 const BASE_WORKER_DIR = "./temp/bolty-worker";
 
 if (!Bun.file(BASE_WORKER_DIR).exists()){
-
-    Bun.write(BASE_WORKER_DIR,"");
+    await Bun.write(BASE_WORKER_DIR, "");
 }
 
 export async function onFileUpdate(filePath : string, fileContent : string){
@@ -10,13 +9,36 @@ export async function onFileUpdate(filePath : string, fileContent : string){
     await Bun.write(`${BASE_WORKER_DIR}/${filePath}`, fileContent);
 }
 
-export function  onShellCommand(shellCommand : string){
+export function onShellCommand(shellCommand: string) {
+    console.log("Running shell command:", shellCommand);
     const commands = shellCommand.split("&&");
-    for (const command of commands){
-        console.log(`Running command : ${command}`);
-        const result  = Bun.spawnSync({cmd : command.trim().split(" "),cwd : BASE_WORKER_DIR});
 
-        console.log(result.stdout.toString());
-        console.log(result.stderr)
+    for (const command of commands) {
+        const trimmedCommand = command.trim();
+        console.log(`Executing: ${trimmedCommand}`);
+        
+        // Use shell to properly handle complex commands
+        const result = Bun.spawnSync({
+            cmd: ["sh", "-c", trimmedCommand],
+            cwd: BASE_WORKER_DIR
+        });
+        
+        const stdout = new TextDecoder().decode(result.stdout);
+        const stderr = new TextDecoder().decode(result.stderr);
+
+        if (stdout) {
+            console.log("STDOUT:", stdout);
+        }
+        if (stderr) {
+            console.error("STDERR:", stderr);
+        }
+        
+        console.log(`Exit code: ${result.exitCode}`);
+        
+        // Stop execution if command failed
+        if (result.exitCode !== 0) {
+            console.error(`Command failed with exit code: ${result.exitCode}`);
+            break;
+        }
     }
 }

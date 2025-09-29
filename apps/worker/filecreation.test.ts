@@ -37,6 +37,16 @@ function main(){
 }
   </boltAction>
 
+  
+
+  <boltAction type="shell">
+    echo "Hello world"
+  </boltAction>
+  
+  <boltAction type="shell">
+    echo "hello World" &> helloWorld.txt  
+  </boltAction>
+
   <boltAction type="shell">
     npm install
   </boltAction>
@@ -62,8 +72,6 @@ declare module "react-tinder-card" {
   export default TinderCard;
 }
   </boltAction>
-
-  <boltAction type="file" filePath="data/profiles.ts">
 </boltArtifact>
     `
 

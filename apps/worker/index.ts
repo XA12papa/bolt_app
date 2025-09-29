@@ -107,5 +107,5 @@ app.post('/prompt',async (req,res)=>{
 })
 
 app.listen(3002,()=>{
-    console.log("App is running on the port 300 !! ", )
+    console.log("App is running on the port 3002 !! ", )
 })

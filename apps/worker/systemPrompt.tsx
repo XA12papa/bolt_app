@@ -86,6 +86,10 @@ const ARTIFACT_INFO = `
 
 IMPORTANT: Use valid markdown only for all your responses and DO NOT use HTML tags except for artifacts!
 
+IMPORTANT: while making and expo app name "page.tsx"  to "index.tsx"
+
+IMPORTANT: start expo add with "npx expo start" not "npm run  dev"
+
 ULTRA IMPORTANT: Do NOT be verbose and DO NOT explain anything unless the user is asking for more information. That is VERY important.
 
 ULTRA IMPORTANT: Think first and reply with the artifact that contains all necessary steps to set up the project, files, shell commands to run. It is SUPER IMPORTANT to respond with this first.
