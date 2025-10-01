@@ -18,13 +18,24 @@ function HomePage() {
     const textArea = document.getElementById('textArea') as HTMLInputElement
     const  token = await getToken();
     console.log(textArea.value);  
-    
-    const  response = await axios.post("http://localhost:8082/project",{prompt : textArea.value},{headers: {Authorization: `Bearer ${token}`}});
 
-    if(response.data){
-      console.log(response.data)
-      router.push(`/project/${response.data.id}`)    
+
+    try {
+      if(!token){
+        // route user to login / signup  page 
+      }
+      const  response = await axios.post("http://localhost:8082/project",{prompt : textArea.value},{headers: {Authorization: `Bearer ${token}`}});
+
+      if(response.data){
+        console.log(response.data)
+        router.push(`/project/${response.data.id}`)    
+      }
+
+
+    } catch (error) {
+        // toast something went wrong 
     }
+
   }
      return (
 

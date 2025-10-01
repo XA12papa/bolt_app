@@ -46,8 +46,13 @@ app.post("/project",middleware,async (req, res) => {
             }
         })
 
-
-
+        await prismaClient.prompt.create({
+          data:{
+            prompt ,
+            projectId : response.id,
+            role :'USER'
+          }  
+        })
 
 
         console.log(response);
@@ -58,6 +63,31 @@ app.post("/project",middleware,async (req, res) => {
     }
 })
 
+app.post("/getPrompts",async (req,res) =>{
+    try {
+        const {projectId} =  req.body;
+
+        const response = await prismaClient.prompt.findMany(
+            {
+                where :{
+                    projectId : projectId
+                }
+            }
+        );
+        res.status(200).json(response);
+
+    } catch (error) {
+        console.error(error)
+    }
+})
+
+app.post("/storePrompte",middleware,(req, res)=>{
+    try {
+        
+    } catch (error) {
+        
+    }
+})
 
 app.post("/",middleware,(req, res) => {
     res.send("Hello World!");

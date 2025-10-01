@@ -103,7 +103,7 @@ app.post('/prompt',async (req,res)=>{
         return res.status(400).json({ message: "Failed to store the final message" });
     }
 
-    return res.status(200).json({ message: "Prompt stored successfully" });
+    return res.status(200).json({ message: "LLM response generated successfully" });
 })
 
 app.listen(3002,()=>{

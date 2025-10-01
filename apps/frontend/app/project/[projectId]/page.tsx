@@ -12,6 +12,7 @@ import { BorderBeam } from "@/components/ui/border-beam";
 import { cn } from "@/lib/utils";
 
 import { Eye, Code } from "lucide-react";
+import axios from "axios";
 
 
 enum TabKey {
@@ -32,9 +33,30 @@ export default function Chat(){
         return;
     }
 
+
     useEffect(() => {
         console.log(tabState)
     },[tabState])
+
+    async function RequestToLLM()
+    {
+        try {
+            // 1. fetch the prompt history of the user 
+            // 2.extract the latest user prompt and feed it to llm
+            const response =await axios.post('http://localhost:8082/getPrompts',{
+                projectId : projectId
+            });
+
+            const latestPrompt = 
+        } catch (error) {
+            console.error(error)   
+        }
+    }
+
+
+    useEffect(() =>{
+        RequestToLLM(); 
+    }, [])
 
     return (
         <div className="h-screen bg-[#101010] ">
@@ -45,7 +67,7 @@ export default function Chat(){
 
                     <div className="tools w-full h-14 bg-red-500 rounded-sm">
 
-
+                            <h1>Tool bar </h1>
                     </div>
 
 
@@ -148,7 +170,7 @@ export default function Chat(){
                             allow="clipboard-read; clipboard-write; fullscreen"
                             referrerPolicy="no-referrer"
                             />
-                        </TabsContent>
+</TabsContent>
                     </Tabs>
                 </div>
 
