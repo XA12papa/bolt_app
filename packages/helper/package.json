@@ -1,0 +1,16 @@
+{
+  "name": "helper",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "exports": {
+    ".": "./helper.ts"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

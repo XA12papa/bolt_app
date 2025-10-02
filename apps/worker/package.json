@@ -15,6 +15,7 @@
     "axios": "^1.11.0",
     "cors": "^2.8.5",
     "db": "workspace:db",
+    "helper": "workspace:helper",
     "express": "^5.1.0",
     "openai": "^5.12.2"
   }

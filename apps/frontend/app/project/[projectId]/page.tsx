@@ -23,7 +23,7 @@ enum TabKey {
 
 export default function Chat(){
     const {projectId} = useParams<{projectId : string}>();
-
+    const [prompt, setPrompt] = React.useState<string>("");
     const [tabState, changetabState] = React.useState<TabKey>(TabKey.Code)
     // 1.send prompt to worker 
     // 2.if preview is not ready set a loading screen
@@ -43,11 +43,24 @@ export default function Chat(){
         try {
             // 1. fetch the prompt history of the user 
             // 2.extract the latest user prompt and feed it to llm
-            const response =await axios.post('http://localhost:8082/getPrompts',{
+            const response  =await axios.post('http://localhost:8082/getPrompts',{
                 projectId : projectId
             });
 
-            const latestPrompt = 
+            const latestPrompt = response.data[response.data.length - 1]?.prompt;
+            console.log(latestPrompt);
+
+            if(latestPrompt !== undefined && latestPrompt !== null && latestPrompt !== ""){
+                // request to llm ;
+
+                console.log(latestPrompt);
+                const llmResponse = await axios.post('http://localhost:3002/prompt',{
+                    prompt : latestPrompt,
+                    projectId : projectId
+                });
+
+                console.log(llmResponse.data)
+            }
         } catch (error) {
             console.error(error)   
         }
@@ -73,12 +86,7 @@ export default function Chat(){
 
                     <div className="llm-response  p-4 w-full text-gray-500 rounded-md grow top-0 overflow-y-scroll no-scrollbar">
                         <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel dignissimos labore deserunt? Repellat ipsum ratione eius dolorum tempora commodi sunt maxime asperiores animi, voluptate ipsam in praesentium impedit blanditiis quidem.
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel dignissimos labore deserunt? Repellat ipsum ratione eius dolorum tempora commodi sunt maxime asperiores animi, voluptate ipsam in praesentium impedit blanditiis quidem.
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel dignissimos labore deserunt? Repellat ipsum ratione eius dolorum tempora commodi sunt maxime asperiores animi, voluptate ipsam in praesentium impedit blanditiis quidem.
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel dignissimos labore deserunt? Repellat ipsum ratione eius dolorum tempora commodi sunt maxime asperiores animi, voluptate ipsam in praesentium impedit blanditiis quidem.
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel dignissimos labore deserunt? Repellat ipsum ratione eius dolorum tempora commodi sunt maxime asperiores animi, voluptate ipsam in praesentium impedit blanditiis quidem.
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel dignissimos labore deserunt? Repellat ipsum ratione eius dolorum tempora commodi sunt maxime asperiores animi, voluptate ipsam in praesentium impedit blanditiis quidem.
+                            USER : {prompt}
                         </p>
 
                     </div>

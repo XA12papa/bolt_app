@@ -2,6 +2,8 @@ import OpenAI from "openai";
 import { systemPrompt } from "./systemPrompt";
 import { prismaClient } from "db/client";
 
+
+import { ApiError, ApiResponse, asyncHandler } from "helper";
 import express, { text } from "express";
 import cors from "cors";
 import { ArtifactProcessor } from "./phraser";
@@ -11,7 +13,7 @@ app.use(express.json());
 app.use(cors());
 
 
-app.post('/prompt',async (req,res)=>{
+app.post('/prompt',asyncHandler( async (req,res)=>{
     // 1 . Take projectId and prompt from user 
     // 2. fetch project from the prisma client
     // 3. pull all the history of chats from the prisma client
@@ -26,7 +28,7 @@ app.post('/prompt',async (req,res)=>{
         }
     })
     if(!project){
-        return res.status(400).json({ error: "Project not found" });
+        res.status(404).json(new ApiResponse(404,null,"Project not found"));
     }
 
     console.log(project)
@@ -100,11 +102,13 @@ app.post('/prompt',async (req,res)=>{
     });
     console.log("final response ", finalMessage)
     if(!finalMessage){
-        return res.status(400).json({ message: "Failed to store the final message" });
+        res.status(400).json(new ApiResponse(400,finalMessage,"something went wrong while generating llm response"));
     }
 
-    return res.status(200).json({ message: "LLM response generated successfully" });
-})
+    res.status(200).json(new ApiResponse(200 , finalMessage ,"successfully generated the llm respiosne "));
+
+    
+}))
 
 app.listen(3002,()=>{
     console.log("App is running on the port 3002 !! ", )
